@@ -27,12 +27,11 @@ class BertForMyMultiTask(BertPreTrainedModel):
 
         # 计算各个类别的loss
         loss_fct = CrossEntropyLoss()
-        loss_purpose = loss_fct(logits_1, labels[:, 0])
-        loss_type = loss_fct(logits_2, labels[:, 1])
-        loss_15you = loss_fct(logits_3, labels[:, 2])
+        loss_1 = loss_fct(logits_1, labels[:, 0])
+        loss_2 = loss_fct(logits_2, labels[:, 1])
+        loss_3 = loss_fct(logits_3, labels[:, 2])
 
-        # todo 添加各部分loss的权重参数
-        multi_loss = loss_purpose + loss_type + loss_15you
+        multi_loss = loss_1 + loss_2 + loss_3
 
         outputs = (multi_loss,) + (logits_1, logits_2, logits_3)
         return outputs
